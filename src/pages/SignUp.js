@@ -1,0 +1,76 @@
+import React from 'react'
+import { Grid, Text, Input, Button } from '../elements'
+import { useDispatch } from "react-redux"
+import { actionCreators as userActions } from '../redux/modules/user';
+import { emailCheck,passwordCheck } from '../shared/common';
+
+const SignUp = (props) => {
+  
+  const dispacth = useDispatch();
+  const [id, setId] = React.useState('');
+  const [pw, setPw] = React.useState('');
+  const [pwCheck, setPwdCheck] = React.useState('');
+  const [userName, setUserName] = React.useState('');
+
+  const signup = () => {
+    
+    if (id === '' || pw === '' || userName === '') {
+      window.alert('아이디, 비밀번호, 닉네임을 체크해주세요!');
+      return false;
+    }
+
+    if (!passwordCheck(pw)) {
+      window.alert('비밀번호 최소 8글자를 지켜주세요!');
+      return false;
+    }
+
+    if (pw !== pwCheck) {
+      window.alert('비밀번호 재확인이 다릅니다!');
+      return false;
+    }
+
+    if (!emailCheck(id)) {
+      window.alert('이메일 형식이 맞지 않습니다!');
+      return false;
+    }
+    dispacth(userActions.signupFB(id,pw,userName));
+  };
+
+
+  return (
+    <React.Fragment>
+      <Grid padding="16px">
+        <Text size="26px" bold>회원가입</Text>
+        <Grid padding="16px 0px">
+          <Input label="아이디" placeholder="아이디를 입력해주세요." _onChange={(e) => { setId(e.target.value); }} />
+        </Grid>
+
+        <Grid padding="16px 0px">
+          <Input label="닉네임" placeholder="닉네임을 입력해주세요." _onChange={(e) => {
+            setUserName(e.target.value);
+            
+          }}/>
+        </Grid>
+
+        <Grid padding="16px 0px">
+          <Input label="비밀번호" type="password" placeholder="비밀번호를 입력해주세요." _onChange={(e) => {
+            setPw(e.target.value);
+          }} />
+          <Text margin="4px 0px 0px 0px" size="12px">비밀번호는 최소 8글자를 입력해주세요.</Text>
+        </Grid>
+
+        <Grid padding="16px 0px" margin="0px 0px 12px 0px">
+          <Input label="비밀번호" type="password" placeholder="비밀번호를 다시 입력해주세요." _onChange={(e) => {
+            setPwdCheck(e.target.value);
+          }} />
+        </Grid>
+
+        <Button text="회원가입하기" _onClick={signup}></Button>
+      </Grid>
+
+      
+    </React.Fragment>
+  );
+}
+
+export default SignUp;
