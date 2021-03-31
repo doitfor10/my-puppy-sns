@@ -7,10 +7,111 @@ import { actionCreators as postActions } from "../redux/modules/post";
 
 
 
-const Post = (props) => {
+const Post =React.memo((props) => {
   
   const dispatch = useDispatch();
   
+  if (props.post_layout === 'left') {
+    
+    return (
+      <React.Fragment>
+        <Grid margin="0px 0px 15px 0px" bg="#ffffff" shadow>
+          {/* 안에 내용들이 grid의 칠드런으로 들어간다.
+            is_flex는 존재만으로 true */}
+          <Grid is_flex padding="15px 16px 0px 16px" margin="0px 0px 10px 0px">
+            {/* 자동으로 내용물 넓이만큼만 가지게 해라. auto */}
+            <Grid is_flex width="auto">
+              <Image shape="circle" src={props.src}></Image>
+              <Text bold margin="0px 6px  ">{props.user_info.user_name}</Text>
+            </Grid>
+            <Grid is_flex width="auto">
+              <Text size="13px">{props.insert_dt}</Text>
+              {props.is_me && <Button padding="4px" width="auto" margin="0px 2px 0px 8px"
+                _onClick={(e) => {
+                  e.stopPropagation();
+                  history.push(`/write/${props.id}`);
+                }}>
+                수정
+                </Button>}
+              {props.is_me && <Button padding="4px" width="auto" margin="0px 5px 0px 2px"
+                _onClick={(e) => {
+                  e.stopPropagation();
+                  dispatch(postActions.deletePostFB(props.id));
+                }}>
+                삭제
+                </Button>}
+            </Grid>
+          </Grid>
+          <Grid is_flex>
+            <Image layout shape="rectangle" src={props.image_url}></Image>
+            <Grid is_flex>
+              <Text margin="0px 0px 0px 12px">{props.contents}</Text>
+          </Grid>
+          </Grid>
+          <Grid padding="16px" is_flex>
+            <Text margin="0px" bold size="15px">좋아요 {props.post_like}개</Text>
+            <Text margin="0px">
+                <FavoriteIcon style={{
+                color: "#CBCBCB",
+                cursor: "pointer",
+              }} /></Text>
+
+          </Grid>
+        </Grid>
+      </React.Fragment>
+    )
+  }
+
+  if (props.post_layout === 'right') {
+    return (
+      <React.Fragment>
+        <Grid margin="0px 0px 15px 0px" bg="#ffffff" shadow>
+          {/* 안에 내용들이 grid의 칠드런으로 들어간다.
+            is_flex는 존재만으로 true */}
+          <Grid is_flex padding="15px 16px 0px 16px" margin="0px 0px 10px 0px">
+            {/* 자동으로 내용물 넓이만큼만 가지게 해라. auto */}
+            <Grid is_flex width="auto">
+              <Image shape="circle" src={props.src}></Image>
+              <Text bold margin="0px 6px  ">{props.user_info.user_name}</Text>
+            </Grid>
+            <Grid is_flex width="auto">
+              <Text size="13px">{props.insert_dt}</Text>
+              {props.is_me && <Button padding="4px" width="auto" margin="0px 2px 0px 8px"
+                _onClick={(e) => {
+                  e.stopPropagation();
+                  history.push(`/write/${props.id}`);
+                }}>
+                수정
+                </Button>}
+              {props.is_me && <Button padding="4px" width="auto" margin="0px 5px 0px 2px"
+                _onClick={(e) => {
+                  e.stopPropagation();
+                  dispatch(postActions.deletePostFB(props.id));
+                }}>
+                삭제
+                </Button>}
+            </Grid>
+          </Grid>
+          <Grid is_flex>
+            <Grid is_flex>
+              <Text margin="0px 0px 0px 12px">{props.contents}</Text>
+            </Grid>
+            <Image layout shape="rectangle" src={props.image_url}></Image>
+          </Grid>
+          <Grid padding="16px" is_flex>
+            <Text margin="0px" bold size="15px">좋아요 {props.post_like}개</Text>
+            <Text margin="0px">
+                <FavoriteIcon style={{
+                color: "#CBCBCB",
+                cursor: "pointer",
+              }} /></Text>
+
+          </Grid>
+        </Grid>
+      </React.Fragment>
+    )
+  }
+
   return (
      <React.Fragment>
         <Grid margin="0px 0px 15px 0px" bg="#ffffff" shadow>
@@ -56,13 +157,11 @@ const Post = (props) => {
             }} /></Text>
 
         </Grid>
-        
-       
       </Grid>
-      </React.Fragment>
+     </React.Fragment>
   )
 
-}
+})
 
 Post.defaultProps = {
   //유저 정보
@@ -76,6 +175,7 @@ Post.defaultProps = {
   post_like: 10,
   insert_dt: "2021-03-01 10:00:00",
   is_me: false, //나라면 수정 가능.
+  post_layout: 'normal',
 };
 
 export default Post;

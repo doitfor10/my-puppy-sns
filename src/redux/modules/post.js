@@ -27,7 +27,8 @@ const initialPost = {
 
   //게시글 이미지
   image_url : "https://cdn.pixabay.com/photo/2017/06/24/09/13/dog-2437110_1280.jpg",
-  contents : "",
+  contents: "",
+  post_layout:"normal",
   post_like : 0,
   insert_dt: moment().format('YYYY-MM-DD hh:mm:ss'),
 };
@@ -54,6 +55,7 @@ const editPostFB = (post_id = null, post = {}) => {
       postDB.doc(post_id).update(post).then(doc => {
         dispatch(editPost(post_id, { ...post }));
         history.replace('/');
+        dispatch(imageActions.setPreview(null));
       })
       return;
     } else {
@@ -66,6 +68,7 @@ const editPostFB = (post_id = null, post = {}) => {
           postDB.doc(post_id).update({ ...post, image_url: url }).then(doc => {
             dispatch(editPost(post_id, { ...post, image_url: url }));
             history.replace('/');
+            dispatch(imageActions.setPreview(null));
           })
         }).catch((err) => {
           window.alert('이미지 업로드에 문제가 생겨 게시글 수정이 되지 않았습니다!');
@@ -73,11 +76,11 @@ const editPostFB = (post_id = null, post = {}) => {
         })
       })
     }
-
+    
   };
 };
 
-const addPostFB = (contents = "",) => {
+const addPostFB = (contents = "",post_layout="normal") => {
  
   return function (dispatch, getState, { history }) {
   
@@ -92,10 +95,10 @@ const addPostFB = (contents = "",) => {
     const _post = {
       ...initialPost,
       contents: contents,
+      post_layout: post_layout,
       insert_dt: moment().format("YYYY-MM-DD hh:mm:ss")
     };
     const _image = getState().image.preview;
-    console.log(_image);
     const _upload = storage
       .ref(`images/${user_info.user_id}_${new Date().getTime()}`)
       .putString(_image, "data_url");
@@ -161,7 +164,8 @@ const getPostFB = (start = null, size = 3)=>{
           contents: _post.contents,
           image_url: _post.image_url,
           post_like: _post.post_like,
-          insert_dt: _post.insert_dt
+          insert_dt: _post.insert_dt,
+          post_layout: _post.post_layout,
         }
         
         post_list.push(post);

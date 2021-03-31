@@ -4,7 +4,7 @@ import { Text, Grid } from './index';
 
 const Input = (props) => {
   
-  const { label, placeholder, _onChange,type,multiLine,value,is_submit,onSubmit } = props;
+  const { label, placeholder, _onChange,type,multiLine,value,is_submit,onSubmit,radio,radioName,checked } = props;
   
   if (multiLine) {
     return (
@@ -14,7 +14,19 @@ const Input = (props) => {
       </Grid>
     )
   }
+
   
+  if (radio) {
+    return (
+      <React.Fragment>
+        <label>
+          <input type="radio" name={radioName} value={value} checked={checked} onChange={_onChange}/>
+          {label}
+        </label>
+      </React.Fragment>      
+    )
+  }
+
   
   return (
     <React.Fragment>
@@ -32,15 +44,19 @@ const Input = (props) => {
   )
 }
 
+
 Input.defaultProps = {
   label: false, 
   placeholder: '텍스트를 입력해주세요.',
   _onChange: () => { },
-  type: 'text',
+  type: "text",
   multiLine: false, 
   value: "",
   is_submit: false,
   onSubmit: () => { },
+  radio: false,
+  radioName: "",
+  checked: false,
 }
 
 const ElInput = styled.input`

@@ -9,16 +9,17 @@ import {history } from "../redux/configStore"
 import { PostList, Login, SignUp,PostWrite,PostDetail } from '../pages';
 import PostAddIcon from '@material-ui/icons/PostAdd';
 import './style.scss';
-
-import { useDispatch } from 'react-redux'
+import Spinner from './Spinner';
+import { useDispatch,useSelector } from 'react-redux';
 import { actionCreators as userActions } from "../redux/modules/user";
 import { apiKey } from "./firebase";
 
-function App() { 
+function App() {
   
   const dispatch = useDispatch();
   const _session_key = `firebase:authUser:${apiKey}:[DEFAULT]`;
   const is_session = sessionStorage.getItem(_session_key) ? true : false;
+  
 
   React.useEffect(() => {
 
@@ -29,8 +30,10 @@ function App() {
   }, []);
 
   return (
-    <React.Fragment>
-      <Grid>
+    
+    <React.Fragment >
+     
+      <Grid bg="#ffffff" >
       <Header/>
       <ConnectedRouter history={history}>
         <Route path="/" exact component={PostList}/>
@@ -50,8 +53,8 @@ function App() {
           <PostAddIcon />
         </Button>
       </Permit>
-    </React.Fragment>
-    
-    ); 
-} 
+      
+    </React.Fragment >
+      )
+  } 
 export default App;

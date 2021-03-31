@@ -34,7 +34,7 @@ const Upload = (props) => {
     return (
         <React.Fragment>
             <FIleInput type="file" ref={fileInput} onChange={selectFile} disabled={is_uploading} />
-            <Button _onClick={uploadFB} margin="10px 0px 0px 0px">업로드하기</Button>
+            {/* <Button _onClick={uploadFB} margin="10px 0px 0px 0px">업로드하기</Button> */}
         </React.Fragment>
     )
 }

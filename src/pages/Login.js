@@ -23,7 +23,7 @@ const Login = (props) => {
   
   return (
     <React.Fragment>
-        <Grid padding="16px">
+        <Grid padding="16px 16px 50px 16px" shadow>
         <Text size="26px" bold>
           로그인
         </Text>

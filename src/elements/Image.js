@@ -4,12 +4,13 @@ import styled from 'styled-components';
 const Image = (props) => {
   
   //props로 받아와라!
-  const { shape, src, size } = props;
+  const { shape, src, size, layout } = props;
 
 
   const styles = {
     src: src,
     size: size,
+  
   }
   
   if (shape === "circle") {
@@ -19,8 +20,8 @@ const Image = (props) => {
   }
   if (shape === 'rectangle') {
     return(
-      <AspectOutter>
-        <AspectInner {...styles}></AspectInner>
+      <AspectOutter layout={layout}>
+        <AspectInner {...styles} layout={layout}></AspectInner>
       </AspectOutter>
     )
 
@@ -39,6 +40,7 @@ Image.defaultProps = {
   shape: "circle", //이미지 모양
   src: "https://cdn.pixabay.com/photo/2017/09/25/13/14/dog-2785077_1280.jpg",
   size: 38,
+  layout:false,
 
 }
 
@@ -51,7 +53,7 @@ const ImageDefault = styled.div`
 `;
 
 const AspectOutter = styled.div`
-  width:100%;
+  width: ${(props) => props.layout ? "52" : "100"}%;
   min-width: 250px;
 `;
 
@@ -60,7 +62,10 @@ const AspectInner = styled.div`
   padding-top:75%;  
   overflow : hidden;
   background-image: url('${(props) => props.src}');
+  ${(props) => props.layout ? 'height:22vh;' : ''}
+  ${(props) => props.layout ? 'background-position:center;' : ''}
   background-size: cover;
+
 `;
 
 //변수 규칙 var(--size)

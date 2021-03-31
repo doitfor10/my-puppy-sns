@@ -12,7 +12,7 @@ const Header = (props) => {
   const _session_key = `firebase:authUser:${apiKey}:[DEFAULT]`;
   const is_session = sessionStorage.getItem(_session_key) ? true : false;
 
-
+  console.log(is_login,is_session)
   if (is_session && is_login) {
     return (
         <React.Fragment>
@@ -31,7 +31,7 @@ const Header = (props) => {
 
 return (
 <React.Fragment>
-  <Grid is_flex padding="4px 16px" margin="10px 0px">
+  <Grid is_flex padding="4px 16px">
     <Grid>
       <Text margin="0px" size="24px" bold logo _onClick={() => {history.push('/')}}>멍멍그램</Text>
     </Grid>
