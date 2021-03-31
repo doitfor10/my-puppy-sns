@@ -4,6 +4,7 @@ import styled from 'styled-components';
 
 const Grid = (props) => {
  
+ 
   const {is_flex,width,margin,padding,bg,children,center,_onClick,shadow} = props;
   
  

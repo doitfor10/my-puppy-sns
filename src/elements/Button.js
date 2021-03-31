@@ -3,7 +3,7 @@ import styled from 'styled-components';
 
 const Button = (props) => {
  
-  const { text, _onClick, is_float,children,margin,width,padding,bg,hoverBg,color } = props;
+  const { text, _onClick, is_float,children,margin,width,padding,bg,hoverBg,color,disabled } = props;
   
    const styles = {
     margin: margin,
@@ -27,7 +27,7 @@ const Button = (props) => {
 
   return (
     <React.Fragment>
-      <ElButton {...styles} onClick={ _onClick}>{text? text:children}</ElButton>
+      <ElButton {...styles} onClick={_onClick} disabled={disabled}>{text? text:children}</ElButton>
     </React.Fragment>
   )
 }
@@ -43,6 +43,7 @@ Button.defaultProps = {
   bg: '#2F2D2D',
   hoverBg: '#ef6c00',
   color: '#ffffff',
+  disabled:false,
   
 }
 
@@ -62,6 +63,9 @@ const ElButton = styled.button`
   &:hover,:focus{
     background-color: ${(props) => (props.hoverBg)};
     outline: none;
+  }
+  &:disabled{
+    background-color: #C0C0C0;
   }
 `;
 

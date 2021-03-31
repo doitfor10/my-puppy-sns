@@ -2,12 +2,17 @@ import { createStore, combineReducers, applyMiddleware, compose } from "redux";
 import thunk from "redux-thunk";
 import { createBrowserHistory } from "history";
 import { connectRouter } from "connected-react-router";
-
+import user from './modules/user';
+import image from './modules/image';
+import post from './modules/post';
 //히스토리 객체 생성
 export const history = createBrowserHistory();
 
 //combineReducers
 const rootReducer = combineReducers({
+  user: user,
+  post: post,
+  image:image,
   router: connectRouter(history),
 });
 
@@ -34,7 +39,7 @@ const composeEnhancers =
     : compose;
 
 //미들웨어 묶어주기. 사용하는 모든 미들웨어를 묶어준다.
- const enhancer = composeEnhancers(
+const enhancer = composeEnhancers(
   applyMiddleware(...middlewares)
 );
 

@@ -1,7 +1,25 @@
-import React from "react";
+import React, { useState } from "react";
 import { Text, Input, Grid, Button } from "../elements";
+import { useDispatch} from 'react-redux'
+import { actionCreators as userActions } from "../redux/modules/user"
+import { emailCheck } from '../shared/common';
 
 const Login = (props) => {
+  
+  const dispatch = useDispatch();
+  const [id, setId] = useState('');
+  const [pw, setPw] = useState('');
+
+  const login = () => {
+    
+    if (!emailCheck(id)) {
+      window.alert('이메일 형식이 맞지 않습니다!');
+    }
+    dispatch(userActions.loginFB(id, pw));
+    
+  };
+
+
   
   return (
     <React.Fragment>
@@ -16,7 +34,7 @@ const Login = (props) => {
             label="아이디"
             placeholder="아이디를 입력해주세요."
             _onChange={(e) => {
-              
+              setId(e.target.value);
             }}
           />
         </Grid>
@@ -27,16 +45,16 @@ const Login = (props) => {
             placeholder="패스워드 입력해주세요."
             type="password"
             _onChange={(e) => {
-              
+              setPw(e.target.value);
             }}
            
             
-          />
+          />  
         </Grid>
-        <Button text="로그인하기" _onClick={() => {
-          console.log('로그인 했어!');
-          
+        <Button text="로그인하기" disabled={id===''||pw===''?true:false} _onClick={() => {
+          login();
         }} />
+
       </Grid>
     </React.Fragment>
   )

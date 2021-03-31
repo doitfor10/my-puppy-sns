@@ -2,8 +2,14 @@ import React from 'react';
 import { Button, Grid, Image, Text } from '../elements'
 import { history } from '../redux/configStore'
 import FavoriteIcon from '@material-ui/icons/Favorite';
+import { useDispatch } from 'react-redux';
+import { actionCreators as postActions } from "../redux/modules/post";
+
+
 
 const Post = (props) => {
+  
+  const dispatch = useDispatch();
   
   return (
      <React.Fragment>
@@ -18,11 +24,19 @@ const Post = (props) => {
           </Grid>
           <Grid is_flex width="auto">
             <Text size="13px">{props.insert_dt}</Text>
-            {props.is_me && <Button padding="4px" width="auto" margin="8px"
-              _onClick={() => {
+            {props.is_me && <Button padding="4px" width="auto" margin="0px 2px 0px 8px"
+              _onClick={(e) => {
+                e.stopPropagation();
                 history.push(`/write/${props.id}`);
               }}>
               수정
+              </Button>}
+             {props.is_me && <Button padding="4px" width="auto" margin="0px 5px 0px 2px"
+              _onClick={(e) => {
+                e.stopPropagation();
+                dispatch(postActions.deletePostFB(props.id));
+              }}>
+              삭제
               </Button>}
           </Grid>
         </Grid>
@@ -31,10 +45,10 @@ const Post = (props) => {
 
         </Grid>
         <Grid>
-          <Image shape="rectangle" src={props.src}></Image>
+          <Image shape="rectangle" src={props.image_url}></Image>
         </Grid>
         <Grid padding="16px" is_flex>
-          <Text margin="0px" bold size="15px">좋아요 {props.comment_cnt}개</Text>
+          <Text margin="0px" bold size="15px">좋아요 {props.post_like}개</Text>
           <Text margin="0px">
               <FavoriteIcon style={{
               color: "#CBCBCB",
@@ -57,9 +71,9 @@ Post.defaultProps = {
     user_profile: "",
   },
   //게시글
-  image_url: "",
+  image_url: "https://cdn.pixabay.com/photo/2017/09/25/13/12/dog-2785074_1280.jpg",
   contents: "강아지가 세상을 구한다!",
-  comment_cnt: 10,
+  post_like: 10,
   insert_dt: "2021-03-01 10:00:00",
   is_me: false, //나라면 수정 가능.
 };

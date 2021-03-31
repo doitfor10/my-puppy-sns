@@ -40,11 +40,13 @@ const loginFB = (id, pw) => {
         user_profile: '',
         uid: user.user.uid, //DB user id
       }));
+       
       history.push('/'); //로그인 되었으니 메인홈으로!
       }).catch((error) => {
         let errorCode = error.code;
         let errorMsg = error.message;
-        console.log(errorCode, errorMsg+' 로그인 실패! ㅠㅠ');
+        console.log(errorCode, errorMsg + ' 로그인 실패! ㅠㅠ');
+        window.alert('아이디와 비밀번호가 일치하지 않습니다.');
     });    
     });
   };
@@ -107,9 +109,10 @@ const loginCheckFB = () => {
     //auth에서 제공해주는 기능으로 유저가 있는지, 없는지 확인.
     //실행하는 동안에는 is_login true.
     auth.onAuthStateChanged((user) => {
+     
       if (user) {
         dispatch(setUser({
-          user_name: user.user.displayName,
+          user_name: user.displayName,
           user_profile: '',
           id: user.email,
           uid: user.uid,
