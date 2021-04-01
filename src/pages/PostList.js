@@ -4,25 +4,28 @@ import { Post } from '../components';
 import {useSelector,useDispatch} from 'react-redux';
 import { actionCreators as postActions } from "../redux/modules/post";
 import InfinityScroll from '../shared/InfinityScroll';
-import {history} from '../redux/configStore'
+import { history } from '../redux/configStore'
+import { actionCreators as likeActions } from "../redux/modules/like";
+
 const PostList = (props) => {
   const post_list = useSelector((state) => state.post.list);
   const user_info = useSelector((state) => state.user.user);
   const is_loading = useSelector((state) => state.post.is_loading);
   const paging = useSelector((state) => state.post.paging);
   const dispatch = useDispatch();
- // const { history } = props;
  
-
   React.useEffect(() => {
     
     if (post_list.length < 2) {
       dispatch(postActions.getPostFB());
     }
+    if (!user_info) {
+      return;
+    }
+    dispatch(likeActions.getLikeFB(user_info.uid));
 
-  }, []);
-
-
+  }, [user_info]);
+  
   return (
     <React.Fragment>
       <Grid bg="#FAF6EA" padding="0px 0px 10px 0px">

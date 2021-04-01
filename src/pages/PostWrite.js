@@ -94,7 +94,7 @@ const PostWrite = (props) => {
             </Text>
           </Grid>
 
-         <Image shape="rectangle" src={preview?preview:'http://via.placeholder.com/400x300'}></Image>
+         <Image shape="rectangle" src={preview?preview:'https://mail.google.com/mail/u/0?ui=2&ik=703ff4b5cb&attid=0.1&permmsgid=msg-a:r-2735783013664226676&th=178893372da4318f&view=fimg&sz=s0-l75-ft&attbid=ANGjdJ8epG-2rjD7HGguzvw_hutsrulRLUK0iqSn9o9sVrFU1Mu21BJTqvkTpmoIB5jLAbKbQxu_AUSaKWK7gUqu13KmLx_8huktWDSDyMzG4_0QwEX7PjpgaAsnlXc&disp=emb&realattid=ii_kmxot7fa0'}></Image>
         </Grid>
       <Grid is_flex width="65%" margin="10px 0px 0px 12px">
         <Text size="14px" bold>게시글 레이아웃 정렬</Text>

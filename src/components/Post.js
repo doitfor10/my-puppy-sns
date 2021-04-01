@@ -2,16 +2,24 @@ import React from 'react';
 import { Button, Grid, Image, Text } from '../elements'
 import { history } from '../redux/configStore'
 import FavoriteIcon from '@material-ui/icons/Favorite';
-import { useDispatch } from 'react-redux';
+import { useDispatch,useSelector } from 'react-redux';
 import { actionCreators as postActions } from "../redux/modules/post";
-
+import { actionCreators as likeActions } from "../redux/modules/like";
 
 
 const Post =React.memo((props) => {
   
   const dispatch = useDispatch();
-  
-  if (props.post_layout === 'left') {
+  const user_info = useSelector((state) => state.user.user);
+  const likeList = useSelector((state) => state.like.list);
+  const userLikes = likeList.filter((l) => l.user_id == user_info?.uid);
+  let isLike;
+  if (userLikes) {
+    isLike = userLikes.findIndex((l) => l.post_id === props.id) !== -1;
+    
+  }
+ 
+ if (props.post_layout === 'left') {
     
     return (
       <React.Fragment>
@@ -50,11 +58,23 @@ const Post =React.memo((props) => {
           </Grid>
           <Grid padding="16px" is_flex>
             <Text margin="0px" bold size="15px">좋아요 {props.post_like}개</Text>
-            <Text margin="0px">
-                <FavoriteIcon style={{
-                color: "#CBCBCB",
+            
+             <FavoriteIcon style={{
+                color: isLike?"#F59C9C":"#CBCBCB",
                 cursor: "pointer",
-              }} /></Text>
+            }} onClick={(e) => {
+                
+            e.stopPropagation();
+              if (user_info && !isLike) {
+                //좋아요 안함.
+                dispatch(likeActions.addLikeFB(props.id));
+             
+              } else if (user_info && isLike) {
+                dispatch(likeActions.deleteLikeFB(props.id));
+              } else {
+                window.alert('로그인 후 사용할 수 있습니다! :)');
+              }
+          }}/>
 
           </Grid>
         </Grid>
@@ -100,11 +120,21 @@ const Post =React.memo((props) => {
           </Grid>
           <Grid padding="16px" is_flex>
             <Text margin="0px" bold size="15px">좋아요 {props.post_like}개</Text>
-            <Text margin="0px">
-                <FavoriteIcon style={{
-                color: "#CBCBCB",
+           <FavoriteIcon style={{
+                color: isLike?"#F59C9C":"#CBCBCB",
                 cursor: "pointer",
-              }} /></Text>
+          }} onClick={(e) => {
+            e.stopPropagation();
+            if (user_info && !isLike) {
+              //좋아요 안함.
+              dispatch(likeActions.addLikeFB(props.id));
+              
+            } else if (user_info && isLike) {
+              dispatch(likeActions.deleteLikeFB(props.id));
+            } else {
+                window.alert('로그인 후 사용할 수 있습니다! :)');
+              }
+          }}/>
 
           </Grid>
         </Grid>
@@ -150,11 +180,22 @@ const Post =React.memo((props) => {
         </Grid>
         <Grid padding="16px" is_flex>
           <Text margin="0px" bold size="15px">좋아요 {props.post_like}개</Text>
-          <Text margin="0px">
-              <FavoriteIcon style={{
-              color: "#CBCBCB",
-              cursor: "pointer",
-            }} /></Text>
+          <FavoriteIcon style={{
+                color: isLike?"#F59C9C":"#CBCBCB",
+                cursor: "pointer",
+          }} onClick={(e) => {
+                
+            e.stopPropagation();
+            if (user_info && !isLike) {
+              //좋아요 안함.
+              dispatch(likeActions.addLikeFB(props.id));
+              
+            } else if (user_info && isLike) {
+              dispatch(likeActions.deleteLikeFB(props.id));
+            } else {
+                window.alert('로그인 후 사용할 수 있습니다! :)');
+              }
+          }}/>
 
         </Grid>
       </Grid>

@@ -43,7 +43,7 @@ const P = styled.p`
   ${(props) => (props.margin ? `margin:${props.margin};` : '')}
   ${(props) => (props.logo ? 'font-family:"LotteMartHappy";' : '')}
   ${(props) => (props.logo ? 'cursor: pointer;' : '')}
-  ${(props) => (props.logo ? 'width: 40%;' : '')}
+  ${(props) => (props.logo ? 'width: 46%;' : '')}
 `
 
 export default Text;

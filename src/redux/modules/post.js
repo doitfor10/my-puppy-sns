@@ -194,11 +194,8 @@ const getOnePostFB = (id) => {
         },
         { id: doc.id, user_info: {} }
       );
-
       dispacth(setPost([post]))
-
     })
-    
   }
 };
 
@@ -206,7 +203,6 @@ const deletePostFB = (post_id) => {
   
   return function (dispatch, getState, { history }) {
     const _post = getState().post.list.find((post) => post.id === post_id);
-    console.log(`deletePostFB 확인용: ${_post}`);
     if (!_post) {
       return;
     }
@@ -219,8 +215,6 @@ const deletePostFB = (post_id) => {
     }).catch(err => {
       console.log(`post delete fail ${err}`);
     })
-
-
   };  
 }
 
@@ -241,7 +235,6 @@ export default handleActions({
     if (action.payload.paging) {
       draft.paging = action.payload.paging;
     }
-    
     draft.is_loading = false;
   }),
   [ADD_POST]: (state, action) => produce(state, (draft) => {
@@ -270,7 +263,5 @@ const actionCreators = {
   getPostFB,
   getOnePostFB,
   deletePostFB
-
 };
-
 export { actionCreators };
